@@ -9,6 +9,7 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -17,20 +18,74 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        # check if value is None
+        if value is None:
+            return
+        # check if tree has a root
+        if self.value is None:
+            self.value = BSTNode(value)
+        
+        # insert in left or right
+        if self.value >= value:
+            if self.left is None:
+                self.left = BSTNode(value)
+            else:
+                self.left.insert(value)
+        elif self.value < value:
+            if self.right is None:
+                self.right = BSTNode(value)
+            else:
+                self.right.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        # check if target exists
+        if target is None:
+            return False
+        
+        # check if tree exists
+        if self.value is None:
+            return False
+        
+        # check all the other conditions
+        if self.value == target:
+            return True
+        elif self.value > target:
+            if self.left:
+                if self.left == target:
+                    return True
+                else:
+                    return self.left.contains(target)
+        elif self.value < target:
+            if self.right:
+                if self.right == target:
+                    return True
+                else:
+                    return self.right.contains(target)
+                
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        # check if tree exists
+        if self.value is None:
+            return None
+        # check right
+        if self.right:
+            return self.right.get_max()
+        else:
+            return self.value
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        if self.value:
+            fn(self.value)
+
+        if self.right:
+            self.right.for_each(fn)
+        
+        if self.left:
+            self.left.for_each(fn)
 
     # Part 2 -----------------------
 
